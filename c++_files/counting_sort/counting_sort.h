@@ -1,25 +1,18 @@
-#include <iostream>
-#define BASE 10
-
-using namespace std;
-
-void counting_sort(int arr[], int size)
+int* counting_sort(int arr[], int size, int range)
 {
-    int output[size], count[BASE + 1] = {0}, i;
-    for (i = 0; i < size; i++)
-    {
-        count[arr[i]]++;
+    int *out_arr;
+    int count_arr[range + 1] = {0}, i;
+    out_arr = (int *)malloc(size);
+
+    for(i = 0; i < size; i++) {
+        count_arr[arr[i]]++;
     }
-    for (i = 1; i <= BASE; i++)
-    {
-        count[i] += count[i - 1];
+    for(i = 1; i <= range; i++) {
+        count_arr[i] += count_arr[i-1];
     }
-    for (i = 0; i < size; i++)
-    {
-        output[--count[arr[i]]] = arr[i];
+    for(i = 0; i < size; i++) {
+        out_arr[count_arr[arr[i]]-1] = arr[i];
+        count_arr[arr[i]]--;
     }
-    for (i = 0; i < size; i++)
-    {
-        arr[i] = output[i];
-    }
+    return out_arr;
 }
